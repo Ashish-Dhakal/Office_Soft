@@ -18,7 +18,7 @@ class ListPositions extends ListRecords
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('department_id')
+                Tables\Columns\TextColumn::make('department.name')
                     ->label('Department Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
