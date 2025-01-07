@@ -2,17 +2,17 @@
     <div class="container py-20 mx-auto relative">
         <!-- Open Modal Button -->
         <button wire:click="openModal"
-            class="px-6 py-3 font-medium text-black dark:text-white rounded-full bg-blue-600 hover:bg-blue-700">
-            Open Modal
+            class="px-6 py-3 font-large text-black  rounded-full bg-blue-600 bg-black  hover:bg-blue-700 dark:text-white">
+            <span class="">
+                Clock In
+            </span>
         </button>
 
         <!-- Modal -->
         @if ($modalOpen)
-            <div x-data
-                x-show="$wire.modalOpen"
-                x-transition
-                @click.away="$wire.closeModal()"
-                class="absolute top-full mt-2 left-0 bg-white dark:bg-dark-2 py-12 px-8 text-center shadow-lg border" style="width:500px; right:0px;">
+            <div x-data x-show="$wire.modalOpen" x-transition @click.away="$wire.closeModal()"
+                class="absolute top-full mt-2 left-0 bg-white dark:bg-dark-2 py-12 px-8 text-center shadow-lg border"
+                style="width:500px; right:0px;">
 
 
                 <h3 class="pb-[18px] text-xl font-semibold text-dark dark:text-white sm:text-2xl">
@@ -32,8 +32,10 @@
                         </button>
                     </div>
                     <div class="w-1/2 px-3">
-            
-                        <a href="{{route('filament.admin.resources.positions.index')}}" class="block w-full p-3 text-black dark:text-white font-medium text-center transition border rounded-md border-primary bg-primary hover:bg-blue-dark"> link</a>
+
+                        <a href="{{ route('filament.admin.resources.positions.index') }}"
+                            class="block w-full p-3 text-black dark:text-white font-medium text-center transition border rounded-md border-primary bg-primary hover:bg-blue-dark">
+                            link</a>
                     </div>
                 </div>
             </div>
