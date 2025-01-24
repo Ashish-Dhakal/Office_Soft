@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use App\Action\CustomAction;
 use App\Enums\UserRoles;
 use App\Filament\Resources\UserResource\Forms\UserResourceForm;
 use App\Filament\Resources\UserResource\Tables\UserResourceTable;
@@ -47,11 +46,9 @@ class UserResource extends Resource
             ->filters([
                 //
             ])
-            ->action([
-                // Define actions in the table
-                CustomAction::make()->configureFor('edit'),
-                CustomAction::make()->configureFor('delete'),
-                CustomAction::make()->configureFor('view'),
+            ->actions([
+                Tables\Actions\ViewAction::make()->label(''),
+                Tables\Actions\EditAction::make()->label(''),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

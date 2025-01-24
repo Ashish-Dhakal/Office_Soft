@@ -46,12 +46,7 @@ class AdminPanelProvider extends PanelProvider
             ->unsavedChangesAlerts()
             ->font('poppins')
             ->darkMode(false)
-            ->renderHook(PanelsRenderHook::USER_MENU_BEFORE, function () {
-                return Blade::render('@livewire("modal-component")');
-            })
-            ->renderHook(PanelsRenderHook::USER_MENU_BEFORE, function () {
-                return Blade::render('@livewire("c-lock-in")');
-            })
+           
             ->sidebarWidth('15rem')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
