@@ -43,9 +43,14 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Amber,
                 'secondary' => '#106681',
             ])
-
+            ->unsavedChangesAlerts()
+            ->font('poppins')
+            ->darkMode(false)
             ->renderHook(PanelsRenderHook::USER_MENU_BEFORE, function () {
                 return Blade::render('@livewire("modal-component")');
+            })
+            ->renderHook(PanelsRenderHook::USER_MENU_BEFORE, function () {
+                return Blade::render('@livewire("c-lock-in")');
             })
             ->sidebarWidth('15rem')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')

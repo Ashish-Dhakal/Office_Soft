@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources;
 
-use App\app\Filament\Resources\DepartmentResource\Form\DepartmentForm;
+use App\Filament\Resources\DepartmentResource\Form\DepartmentForm;
 use App\Filament\Resources\DepartmentResource\Pages;
 use App\Filament\Resources\DepartmentResource\RelationManagers;
 use App\Models\Department;
@@ -23,7 +23,11 @@ class DepartmentResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([DepartmentForm::class]);
+        ->schema([
+            Forms\Components\TextInput::make('name')
+                ->required()
+                ->maxLength(255),
+        ]);
     }
 
     public static function table(Table $table): Table

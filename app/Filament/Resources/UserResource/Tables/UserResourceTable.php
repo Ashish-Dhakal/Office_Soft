@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\UserResource\Forms;
+namespace App\Filament\Resources\UserResource\Tables;
 
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Contracts\ResourceFieldContract;

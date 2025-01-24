@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Action\CustomAction;
 use App\Enums\UserRoles;
 use App\Filament\Resources\UserResource\Forms\UserResourceForm;
-use App\Filament\Resources\UserResource\Forms\UserResourceTable;
+use App\Filament\Resources\UserResource\Tables\UserResourceTable;
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
@@ -23,9 +24,14 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
     public static function getNavigationBadge(): ?string
-{
-    return (string) static::$model::count();
-}
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Total number of users';
+    }
 
     public static function form(Form $form): Form
     {
@@ -36,14 +42,16 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
-        ->columns(UserResourceTable::getFields())
+            ->columns(UserResourceTable::getFields())
             ->defaultSort('role', 'asc')
             ->filters([
                 //
             ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+            ->action([
+                // Define actions in the table
+                CustomAction::make()->configureFor('edit'),
+                CustomAction::make()->configureFor('delete'),
+                CustomAction::make()->configureFor('view'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
