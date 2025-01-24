@@ -17,7 +17,7 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-document-currency-bangladeshi';
 
     public static function form(Form $form): Form
     {
@@ -25,12 +25,13 @@ class ProjectResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('title')
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('description')
+                    ->maxLength(255)
                     ->columnSpanFull(),
-                Forms\Components\DatePicker::make('started_at'),
+                Forms\Components\RichEditor::make('description')
+                    ->columnSpanFull(),
+                Forms\Components\DatePicker::make('started_at')
+                ->native(false),
                 Forms\Components\DatePicker::make('deadline_at'),
-                Forms\Components\TextInput::make('completion_time'),
             ]);
     }
 
@@ -40,13 +41,14 @@ class ProjectResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->limit(50),
                 Tables\Columns\TextColumn::make('started_at')
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('deadline_at')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('completion_time'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
