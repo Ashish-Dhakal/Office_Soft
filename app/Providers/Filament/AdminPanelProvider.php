@@ -41,6 +41,7 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Zinc,
                 'success' => Color::Green,
                 'warning' => Color::Amber,
+                'secondary' => '#106681',
             ])
 
             ->renderHook(PanelsRenderHook::USER_MENU_BEFORE, function () {
