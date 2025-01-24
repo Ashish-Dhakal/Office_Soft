@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\app\Filament\Resources\DepartmentResource\Form\DepartmentForm;
-use App\Filament\Resources\DepartmentResource\Pages;
-use App\Filament\Resources\DepartmentResource\RelationManagers;
-use App\Models\Department;
+use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,24 +13,40 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DepartmentResource extends Resource
+class ProjectResource extends Resource
 {
-    protected static ?string $model = Department::class;
+    protected static ?string $model = Project::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([DepartmentForm::class]);
+            ->schema([
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull(),
+                Forms\Components\DatePicker::make('started_at'),
+                Forms\Components\DatePicker::make('deadline_at'),
+                Forms\Components\TextInput::make('completion_time'),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('title')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('started_at')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('deadline_at')
+                    ->date()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('completion_time'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -65,10 +80,10 @@ class DepartmentResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDepartments::route('/'),
-            // 'create' => Pages\CreateDepartment::route('/create'),
-            // 'view' => Pages\ViewDepartment::route('/{record}'),
-            // 'edit' => Pages\EditDepartment::route('/{record}/edit'),
+            'index' => Pages\ListProjects::route('/'),
+            'create' => Pages\CreateProject::route('/create'),
+            'view' => Pages\ViewProject::route('/{record}'),
+            'edit' => Pages\EditProject::route('/{record}/edit'),
         ];
     }
 }
