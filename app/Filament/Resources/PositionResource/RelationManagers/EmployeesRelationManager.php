@@ -34,7 +34,7 @@ class EmployeesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('department.name')
                     ->label('Department Name'), 
                     Tables\Columns\TextColumn::make('user.email')
-                    ->label('Position Name'),
+                    ->label('Email '),
                     Tables\Columns\TextColumn::make('hire_date')
                     ->label('Hire Date'),
                     // ->searchable(),

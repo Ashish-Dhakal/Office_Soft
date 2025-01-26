@@ -76,6 +76,7 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             })
                             ->required(),
                         Select::make('position_id')
+                            ->label('Position Title')
                             ->required()
                             ->options(fn(Get $get) => Position::query()
                                 ->where('department_id', $get('department_id'))

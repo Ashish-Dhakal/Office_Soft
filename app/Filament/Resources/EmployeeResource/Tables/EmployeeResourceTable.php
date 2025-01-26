@@ -24,7 +24,7 @@ final class EmployeeResourceTable implements ResourceFieldContract
                     ->numeric()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('position.title')
-                    ->numeric()
+                    ->label('Position Title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('hire_date')
                     ->date()
