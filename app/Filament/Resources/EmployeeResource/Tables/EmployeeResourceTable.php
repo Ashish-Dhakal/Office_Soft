@@ -36,7 +36,11 @@ final class EmployeeResourceTable implements ResourceFieldContract
                 Tables\Columns\TextColumn::make('gender')
                     ->label('Gender')
                     ->badge(),
-                Tables\Columns\TextColumn::make('address'),
+                Tables\Columns\TextColumn::make('employee_type')
+                    ->label('Contract Type')
+                    ->badge(),
+                Tables\Columns\TextColumn::make('address')
+                ->limit(10),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

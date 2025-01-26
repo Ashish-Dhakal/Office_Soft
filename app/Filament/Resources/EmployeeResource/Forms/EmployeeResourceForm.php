@@ -2,6 +2,8 @@
 
 namespace App\Filament\Resources\EmployeeResource\Forms;
 
+use App\Enums\EmployeeGender;
+use App\Enums\EmployeeTypeEnum;
 use App\Filament\Contracts\ResourceFieldContract;
 use App\Models\Position;
 use Filament\Forms\Components\DatePicker;
@@ -44,11 +46,12 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             ->required(),
                         Select::make('gender')
                             ->label('Gender')
-                            ->options([
-                                'male' => 'Male',
-                                'female' => 'Female',
-                            ])
+                            ->options(
+                                collect(EmployeeGender::cases())->mapWithKeys(fn($case) => [$case->value => $case->getLabel()])->toArray()
+                            )
                             ->required(),
+
+
                     ]),
 
             ])->from('md'),
@@ -56,6 +59,12 @@ final class EmployeeResourceForm implements ResourceFieldContract
 
                 Section::make('Employee Department Details')
                     ->schema([
+                        Select::make('employee_type')
+                            ->label('Employee Contract Type')
+                            ->options(
+                                collect(EmployeeTypeEnum::cases())->mapWithKeys(fn($case) => [$case->value => $case->getLabel()])->toArray()
+                            )
+                            ->required(),
                         Select::make('department_id')
                             ->label('Department Name')
                             ->live()

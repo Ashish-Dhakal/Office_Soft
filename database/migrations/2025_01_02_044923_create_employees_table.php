@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->date('hire_date')->nullable();
             $table->date('dob')->nullable();
+            $table->enum('employee_type',['full_time', 'part_time' , 'contractor' ,'internship' ,'freelancer']);
             $table->enum('gender', ['male', 'female']);
             $table->timestamps();
         });
