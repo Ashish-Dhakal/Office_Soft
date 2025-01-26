@@ -42,6 +42,7 @@ class AdminPanelProvider extends PanelProvider
                 'success' => Color::Green,
                 'warning' => Color::Amber,
                 'secondary' => '#106681',
+                'ternary' => Color::Pink,
             ])
             ->unsavedChangesAlerts()
             ->font('poppins')

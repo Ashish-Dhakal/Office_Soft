@@ -2,11 +2,19 @@
 
 namespace App\Models;
 
+use App\Enums\EmployeeGender;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
 {
     protected $fillable = ['user_id', 'department_id', 'position_id', 'address', 'hire_date', 'dob' , 'gender'];
+
+    protected function casts(): array
+    {
+        return [
+            'gender' => EmployeeGender::class,
+        ];
+    }
 
     public function user()
     {

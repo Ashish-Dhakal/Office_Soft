@@ -4,17 +4,10 @@ namespace App\Filament\Resources;
 
 use App\Enums\UserRoles;
 use App\Filament\Resources\UserResource\Forms\UserResourceForm;
-use App\Filament\Resources\UserResource\Tables\UserResourceTable;
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -38,24 +31,7 @@ class UserResource extends Resource
             ->schema(UserResourceForm::getFields());
     }
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns(UserResourceTable::getFields())
-            ->defaultSort('role', 'asc')
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make()->label(''),
-                Tables\Actions\EditAction::make()->label(''),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
+ 
 
     public static function getRelations(): array
     {
