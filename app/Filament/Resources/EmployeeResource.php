@@ -22,10 +22,21 @@ class EmployeeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Total Employees';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+
                 Forms\Components\Select::make('user_id')
                     ->label('Employee Name')
                     ->relationship('user', 'name', function ($query) {
@@ -33,10 +44,7 @@ class EmployeeResource extends Resource
                             ->whereDoesntHave('employee');
                     })
                     ->required()
-                      // ->options(
-                    //     \App\Models\User::where('role', 'employee')->pluck('name', 'id')->toArray()
-                    // )
-                    ,
+                    ->hidden(fn (Get $get) => $get('id'))  ,
                 Forms\Components\Select::make('department_id')
                     ->label('Department Name')
                     ->live()
@@ -56,23 +64,25 @@ class EmployeeResource extends Resource
                     ->searchable()
                     ->live()
                     ->preload(),
-                Forms\Components\Textarea::make('personaldetail')
-                    ->columnSpanFull(),
-                Forms\Components\Textarea::make('emergencycontact')
-                    ->columnSpanFull(),
+                Forms\Components\TextInput::make('address')
+                ->label('Address')
+                    ->required(),
                 Forms\Components\DatePicker::make('hire_date')
+                ->label('Hire Date')
                     ->minDate(now()->toDateString())
                     ->native(false)
                     ->required(),
                 Forms\Components\DatePicker::make('dob')
-                    ->native(false),
+                ->label('Date of Birth')
+                    ->native(false)
+                    ->required(),
                 Forms\Components\Select::make('gender')
+                ->label('Gender')
                     ->options([
                         'male' => 'Male',
                         'female' => 'Female',
                     ])
-                    ->required()
-                    ->rule('in: male,female'),
+                    ->required(),
             ]);
 
     }

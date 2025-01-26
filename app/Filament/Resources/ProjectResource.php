@@ -19,6 +19,16 @@ class ProjectResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-currency-bangladeshi';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Total Projects';
+    }
+
     public static function form(Form $form): Form
     {
         return $form

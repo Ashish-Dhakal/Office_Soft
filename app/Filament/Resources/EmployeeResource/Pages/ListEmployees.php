@@ -7,6 +7,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Filament\Tables\Table;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 
 class ListEmployees extends ListRecords
 {
@@ -17,7 +18,7 @@ class ListEmployees extends ListRecords
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
-                ->label('Employee Name')
+                    ->label('Employee Name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('department.name')
                     ->numeric()
@@ -27,10 +28,13 @@ class ListEmployees extends ListRecords
                     ->searchable(),
                 Tables\Columns\TextColumn::make('hire_date')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('dob')
+                    ->label('Date of Birth')
                     ->date(),
                 Tables\Columns\TextColumn::make('gender'),
+                Tables\Columns\TextColumn::make('address'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -41,7 +45,8 @@ class ListEmployees extends ListRecords
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('department')->relationship('department', 'name'),
+                SelectFilter::make('position')->relationship('position', 'title'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

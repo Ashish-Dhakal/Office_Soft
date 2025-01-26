@@ -19,11 +19,10 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('department_id')->constrained()->onDelete('cascade');
             $table->foreignId('position_id')->constrained()->onDelete('cascade');
-            $table->longText('personaldetail')->nullable();
-            $table->longText('emergencycontact')->nullable();
+            $table->string('address')->nullable();
             $table->date('hire_date')->nullable();
             $table->date('dob')->nullable();
-            $table->enum('gender', ['Male', 'Female'])->default('Male');
+            $table->enum('gender', ['male', 'female']);
             $table->timestamps();
         });
     }

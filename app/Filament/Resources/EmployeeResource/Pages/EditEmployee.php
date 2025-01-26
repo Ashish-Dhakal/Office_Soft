@@ -10,6 +10,17 @@ class EditEmployee extends EditRecord
 {
     protected static string $resource = EmployeeResource::class;
 
+    public function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
+    protected function mutateFormDataBeforeFill(array $data): array
+    {
+        $data['employee_id'] = auth()->user()->id;
+        return $data;
+    }
+
     protected function getHeaderActions(): array
     {
         return [
