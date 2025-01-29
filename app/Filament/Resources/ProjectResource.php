@@ -50,9 +50,10 @@ class ProjectResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('title')
-                    ->searchable(),
+                    ->searchable()
+                    ->limit(20),
                 Tables\Columns\TextColumn::make('description')
-                    ->limit(50),
+                    ->limit(20),
                 Tables\Columns\TextColumn::make('started_at')
                     ->date()
                     ->sortable(),
