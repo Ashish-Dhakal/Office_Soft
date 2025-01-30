@@ -23,8 +23,10 @@ class ListEmployees extends ListRecords
                 SelectFilter::make('position')->relationship('position', 'title'),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->label(''),
+                Tables\Actions\EditAction::make()
+                ->label(''),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

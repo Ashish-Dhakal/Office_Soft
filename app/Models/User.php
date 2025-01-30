@@ -8,8 +8,10 @@ use App\Enums\UserRoles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Filament\Models\Contracts\HasAvatar;
 
-class User extends Authenticatable
+
+class User extends Authenticatable implements HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
@@ -24,12 +26,25 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'avatar'
     ];
+    public function getFilamentAvatarUrl(): string
+    {
+        return $this->avatar 
+            ? asset($this->avatar) 
+            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
+    }
+    
+    
+
+
+    
     public function hasRole(string $role): bool
     {
         return $this->role === $role;
     }
 
+    
 
     /**
      * The attributes that should be hidden for serialization.

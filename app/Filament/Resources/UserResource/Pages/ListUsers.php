@@ -18,6 +18,8 @@ class ListUsers extends ListRecords
         return $table
             ->columns(UserResourceTable::getFields())
             ->defaultSort('role', 'asc')
+            ->paginated(2)
+            ->defaultPaginationPageOption(2)
             ->filters([
                 //
             ])

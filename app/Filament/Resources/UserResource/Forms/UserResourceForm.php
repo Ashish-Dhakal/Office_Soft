@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UserResource\Forms;
 
 use App\Filament\Contracts\ResourceFieldContract;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 
@@ -17,6 +18,12 @@ final class UserResourceForm implements ResourceFieldContract
     public static function getFields(): array
     {
         return [
+            FileUpload::make('avatar')
+                ->disk('public')
+                ->visibility('public')
+                ->directory('user_image')
+                ->image()
+                ->previewable(),
             TextInput::make('name')
                 ->required()
                 ->maxLength(255),

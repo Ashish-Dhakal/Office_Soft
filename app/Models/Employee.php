@@ -7,8 +7,9 @@ use App\Enums\EmployeeTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class Employee extends Model
+
 {
-    protected $fillable = ['user_id', 'department_id', 'position_id', 'address', 'hire_date', 'dob' , 'gender' ,'employee_type'];
+    protected $fillable = ['user_id', 'department_id', 'position_id', 'address', 'hire_date', 'dob', 'gender', 'employee_type' , 'reporting_to' , 'salutation' , 'phone' ,'is_active' ,'receive_mail' ,'slack_id' , 'discord_id' ,];
 
     protected function casts(): array
     {
@@ -16,6 +17,19 @@ class Employee extends Model
             'gender' => EmployeeGender::class,
             'employee_type' =>EmployeeTypeEnum::class
         ];
+    }
+
+
+    // Relationship to get the manager (the employee reports to this person)
+    public function reportingTo()
+    {
+        return $this->belongsTo(Employee::class, 'reporting_to');
+    }
+
+    // Relationship to get the subordinates (employees reporting to this employee)
+    public function subordinates()
+    {
+        return $this->hasMany(Employee::class, 'reporting_to');
     }
 
     public function user()
@@ -47,5 +61,4 @@ class Employee extends Model
     {
         return $this->hasMany(Attendance::class);
     }
-    
 }
