@@ -18,14 +18,20 @@ final class UserResourceTable implements ResourceFieldContract
     public static function getFields(): array
     {
         return [
-            ImageColumn::make('avatar')
-                ->getStateUsing(function ($record) {
-                    return $record->avatar
-                        ? asset('storage/' . $record->avatar)
-                        : asset('assets/suffix-image/slack.png'); // Correct path to storage/public
-                })
-                ->square(),
             TextColumn::make('name')
+                ->label('Users')
+                ->formatStateUsing(function ($record) {
+                    $avatar = $record->avatar
+                        ? asset('storage/' . $record->avatar)
+                        : asset('assets/suffix-image/slack.png');
+
+                    return "<div style='display: flex; align-items: center; gap: 8px;'>
+                            <img src='{$avatar}' alt='Avatar'style='width: 32px; height: 32px; border-radius: 50%; object-fit: cover;''>
+                            <span>{$record->name}</span>
+                        </div>";
+                })
+                ->html()
+
                 ->searchable(),
             TextColumn::make('email')
                 ->searchable(),

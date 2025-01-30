@@ -17,11 +17,23 @@ final class EmployeeResourceTable implements ResourceFieldContract
     public static function getFields(): array
     {
         return [
-            Tables\Columns\ImageColumn::make('user.avatar')
-                ->label('Employee Name'),
+
+
             Tables\Columns\TextColumn::make('user.name')
-                ->label('Employee Name')
+                ->label('Employee')
+                ->formatStateUsing(function ($record) {
+                    $avatar = $record->user->avatar
+                        ? asset('storage/' . $record->user->avatar)
+                        : asset('assets/suffix-image/slack.png');
+
+                    return "<div style='display: flex; align-items: center; gap: 8px;'>
+                    <img src='{$avatar}' alt='Avatar' style='width: 32px; height: 32px; border-radius: 50%; object-fit: cover;'>
+                    <span>{$record->user->name}</span>
+                </div>";
+                })
+                ->html()
                 ->searchable(),
+
             Tables\Columns\TextColumn::make('department.name')
                 ->numeric()
                 ->searchable(),

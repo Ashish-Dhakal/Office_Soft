@@ -17,6 +17,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Forms\Components\Split;
 use Filament\Forms\Components\Toggle;
+use Illuminate\Support\Facades\Blade;
 
 final class EmployeeResourceForm implements ResourceFieldContract
 {
@@ -25,7 +26,7 @@ final class EmployeeResourceForm implements ResourceFieldContract
      *
      * @return array<int, mixed>
      */
-    
+
     public static function getFields(): array
     {
         return [
@@ -57,18 +58,21 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             ->label('Address')
                             ->placeholder('Address')
                             ->required(),
-
-                        TextInput::make('phone')
+                            // ->suffixIcon('gmdi-location-on-o'),
+                            
+                            TextInput::make('phone')
                             ->label('Phone Number')
                             ->placeholder('9876543212')
                             ->tel()
                             ->minLength(10)
                             ->maxLength(10)
-                            ->required(),
-
-                        DatePicker::make('dob')
+                            ->required()
+                            ->suffixIcon('bi-phone'),
+                            
+                            DatePicker::make('dob')
                             ->label('Date of Birth')
                             ->native(false)
+                            ->suffixIcon('bi-calendar-event')
                             ->required(),
 
                         Select::make('gender')
@@ -127,16 +131,16 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             ->label('Hire Date')
                             ->minDate(now()->toDateString())
                             ->native(false)
+                            ->suffixIcon('bi-calendar-event')
                             ->required(),
-
-                        // Slack ID and Discord ID fields
-                        TextInput::make('slack_id')
-                            ->label('Slack ID')
-                            ->suffixIcon(fn() => '<img src="' . asset('assets/suffix-image/slack.png') . '" alt="custom icon" class="h-6 w-6" />'),
 
                         TextInput::make('discord_id')
                             ->label('Discord ID')
-                            ->suffixIcon(fn() => '<img src="' . asset('assets/suffix-image/slack.png') . '" alt="custom icon" class="h-6 w-6" />'),
+                            ->suffixIcon('bi-discord'),
+                            
+                            TextInput::make('slack_id')
+                            ->label('Slack ID')
+                            ->suffixIcon('bi-slack'),
                     ])
                     ->columns(2),
             ])->from('md'),
