@@ -31,7 +31,6 @@ final class UserResourceTable implements ResourceFieldContract
                         </div>";
                 })
                 ->html()
-
                 ->searchable(),
             TextColumn::make('email')
                 ->searchable(),

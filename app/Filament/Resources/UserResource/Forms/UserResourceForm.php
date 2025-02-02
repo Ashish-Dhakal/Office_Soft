@@ -19,11 +19,12 @@ final class UserResourceForm implements ResourceFieldContract
     {
         return [
             FileUpload::make('avatar')
-                ->disk('public')
-                ->visibility('public')
+                // ->disk('public')
+                // ->visibility('public')
                 ->directory('user_image')
                 ->image()
-                ->previewable(),
+                ->previewable()
+                ->getUploadedFileNameForStorageUsing(fn ($file) => $file->hashName()),
             TextInput::make('name')
                 ->required()
                 ->maxLength(255),

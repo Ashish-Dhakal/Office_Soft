@@ -5,6 +5,7 @@ namespace App\Filament\Resources\EmployeeResource\Forms;
 use App\Enums\EmployeeGender;
 use App\Enums\EmployeeTypeEnum;
 use App\Filament\Contracts\ResourceFieldContract;
+use App\Filament\Resources\UserResource\Forms\UserResourceForm;
 use App\Models\Employee;
 use App\Models\Position;
 use Filament\Forms\Components\Checkbox;
@@ -47,6 +48,8 @@ final class EmployeeResourceForm implements ResourceFieldContract
 
                         Select::make('user_id')
                             ->label('Employee Name')
+                            ->createOptionForm(UserResourceForm::getFields())
+                            ->editOptionForm(UserResourceForm::getFields())
                             ->relationship('user', 'name', function ($query) {
                                 $query->where('role', 'employee')
                                     ->whereDoesntHave('employee');
@@ -66,13 +69,13 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             ->tel()
                             ->minLength(10)
                             ->maxLength(10)
-                            ->required()
-                            ->suffixIcon('bi-phone'),
+                            ->required(),
+                            // ->suffixIcon('bi-phone'),
                             
                             DatePicker::make('dob')
                             ->label('Date of Birth')
                             ->native(false)
-                            ->suffixIcon('bi-calendar-event')
+                            // ->suffixIcon('bi-calendar-event')
                             ->required(),
 
                         Select::make('gender')
@@ -131,16 +134,16 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             ->label('Hire Date')
                             ->minDate(now()->toDateString())
                             ->native(false)
-                            ->suffixIcon('bi-calendar-event')
+                            // ->suffixIcon('bi-calendar-event')
                             ->required(),
 
                         TextInput::make('discord_id')
-                            ->label('Discord ID')
-                            ->suffixIcon('bi-discord'),
+                            ->label('Discord ID'),
+                            // ->suffixIcon('bi-discord'),
                             
                             TextInput::make('slack_id')
-                            ->label('Slack ID')
-                            ->suffixIcon('bi-slack'),
+                            ->label('Slack ID'),
+                            // ->suffixIcon('bi-slack'),
                     ])
                     ->columns(2),
             ])->from('md'),

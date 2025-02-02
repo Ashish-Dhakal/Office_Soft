@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\HasAvatar;
-
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements HasAvatar
 {
@@ -31,8 +31,8 @@ class User extends Authenticatable implements HasAvatar
     public function getFilamentAvatarUrl(): string
     {
         return $this->avatar 
-            ? asset($this->avatar) 
-            : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=random';
+            ? Storage::url($this->avatar) 
+            : asset('assets/suffix-image/slack.png');
     }
     
     
