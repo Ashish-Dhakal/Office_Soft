@@ -20,30 +20,30 @@ class ViewUser extends ViewRecord
         ];
     }
 
-    public function infolist(Infolist $infolist): Infolist
-    {
-        return $infolist
-            ->schema([
-                ImageEntry::make('avatar')
-                ->getStateUsing(function ($record) {
-                    return $record->avatar
-                        ? asset('storage' . $record->avatar):
-                        asset('assets/suffix-image/slack.png'); // Correct path to storage/public
+    // public function infolist(Infolist $infolist): Infolist
+    // {
+    //     return $infolist
+    //         ->schema([
+    //             ImageEntry::make('avatar')
+    //             ->getStateUsing(function ($record) {
+    //                 return $record->avatar
+    //                     ? asset('storage' . $record->avatar):
+    //                     asset('assets/suffix-image/slack.png'); // Correct path to storage/public
                     
-                })
-                ->circular(),
-                TextEntry::make('name'),
-                TextEntry::make('email'),
-                TextEntry::make('role')
-                    ->badge(),
-                TextEntry::make('created_at')
-                    ->dateTime()
+    //             })
+    //             ->circular(),
+    //             TextEntry::make('name'),
+    //             TextEntry::make('email'),
+    //             TextEntry::make('role')
+    //                 ->badge(),
+    //             TextEntry::make('created_at')
+    //                 ->dateTime()
                   
-                    ,
-                TextEntry::make('updated_at')
-                    ->dateTime()
+    //                 ,
+    //             TextEntry::make('updated_at')
+    //                 ->dateTime()
                   
                     
-            ]);
-    }
+    //         ]);
+    // }
 }

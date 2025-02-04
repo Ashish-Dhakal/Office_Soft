@@ -22,11 +22,22 @@ class User extends Authenticatable implements HasAvatar
      * @var list<string>
      */
     protected $fillable = [
+        'salutation',
         'name',
         'email',
         'password',
         'role',
-        'avatar'
+        'avatar',
+        'address_1',
+        'address_2',
+        'city',
+        'state',
+        'country',
+        'zip',
+        'phone',
+        'is_active',
+        'gender',
+        'receive_emails'
     ];
     public function getFilamentAvatarUrl(): string
     {
