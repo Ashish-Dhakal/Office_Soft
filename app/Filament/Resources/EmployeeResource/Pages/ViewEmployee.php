@@ -26,7 +26,4 @@ class ViewEmployee extends ViewRecord
         return trim($defaultBreadcrumb . ' > ' . $employeeName); // Append name while keeping format clean
     }
     
-
-
-    
 }

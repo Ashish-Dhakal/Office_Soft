@@ -22,7 +22,7 @@ class UserResource extends Resource
 
     public static function getNavigationBadgeTooltip(): ?string
     {
-        return 'Total number of users';
+        return 'Total Users';
     }
 
     public static function form(Form $form): Form

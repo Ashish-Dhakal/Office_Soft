@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\EmployeeTypeEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->string('title');
             $table->longText('description')->nullable();
-            $table->string('day')->nullable();
+            // $table->enum('applicable_for', EmployeeTypeEnum::values())->default(EmployeeTypeEnum::FULL_TIME->value);
             $table->timestamps();
         });
     }

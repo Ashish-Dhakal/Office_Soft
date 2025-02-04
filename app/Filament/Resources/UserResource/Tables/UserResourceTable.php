@@ -4,6 +4,8 @@ namespace App\Filament\Resources\UserResource\Tables;
 
 use Filament\Tables\Columns\TextColumn;
 use App\Filament\Contracts\ResourceFieldContract;
+use App\Filament\Resources\EmployeeResource;
+use App\Filament\Tables\Columns\LinkColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 
@@ -34,6 +36,27 @@ final class UserResourceTable implements ResourceFieldContract
                 })
                 ->html()
                 ->searchable(),
+
+            // LinkColumn::make('name')
+            //     ->label('Users')
+            //     ->formatStateUsing(function ($record) {
+            //         $avatar = $record->avatar
+            //             ? asset('storage/' . $record->avatar)
+            //             : asset('assets/suffix-image/slack.png');
+
+            //         return "<div style='display: flex; align-items: center; gap: 8px;'>
+            //         <img src='{$avatar}' alt='Avatar' 
+            //             style='width: 32px; height: 32px; border-radius: 50%; object-fit: cover;'>
+            //         <span style='font-weight: bold;'>{$record->salutation}.</span>
+            //         <span>{$record->name}</span>
+            //     </div>";
+            //     })
+            //     ->url(fn($record) => route('filament.admin.resources.users.view', ['record' => $record->id]))
+            //     ->html()
+            //     ->sortable()
+            //     ->searchable(),
+          
+
 
             TextColumn::make('email')
                 ->searchable(),
