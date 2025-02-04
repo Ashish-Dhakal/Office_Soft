@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Employee extends Model
 
 {
-    protected $fillable = ['user_id', 'department_id', 'position_id', 'address', 'hire_date', 'dob', 'gender', 'employee_type' , 'reporting_to' , 'salutation' , 'phone' ,'is_active' ,'receive_mail' ,'slack_id' , 'discord_id' ,];
+    protected $fillable = ['user_id', 'department_id', 'position_id','hire_date', 'dob', 'employee_type' , 'reporting_to','slack_id' , 'discord_id' ,];
 
     protected function casts(): array
     {

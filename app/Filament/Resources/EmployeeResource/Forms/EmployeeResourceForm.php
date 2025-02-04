@@ -35,17 +35,6 @@ final class EmployeeResourceForm implements ResourceFieldContract
             Split::make([
                 Section::make('Add Employee Details')
                     ->schema([
-                        Select::make('salutation')
-                            ->options([
-                                'Mr' => 'Mr',
-                                'Mrs' => 'Mrs',
-                                'Miss' => 'Miss',
-                                'Er' => 'Er',
-                                'Dr' => 'Dr',
-                            ])
-                            ->label('Salutation')
-                            ->required(),
-
                         Select::make('user_id')
                             ->label('Employee Name')
                             ->createOptionForm(UserResourceForm::getFields())
@@ -56,33 +45,22 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             })
                             ->required()
                             ->hidden(fn(Get $get) => $get('id')),
-
-                        TextInput::make('address')
-                            ->label('Address')
-                            ->placeholder('Address')
+                        Select::make('employee_type')
+                            ->label('Employee Contract Type')
+                            ->options(
+                                collect(EmployeeTypeEnum::cases())->mapWithKeys(fn($case) => [$case->value => $case->getLabel()])->toArray()
+                            )
                             ->required(),
-                            // ->suffixIcon('gmdi-location-on-o'),
-                            
-                            TextInput::make('phone')
-                            ->label('Phone Number')
-                            ->placeholder('9876543212')
-                            ->tel()
-                            ->minLength(10)
-                            ->maxLength(10)
-                            ->required(),
-                            // ->suffixIcon('bi-phone'),
-                            
-                            DatePicker::make('dob')
+                        DatePicker::make('dob')
                             ->label('Date of Birth')
                             ->native(false)
                             // ->suffixIcon('bi-calendar-event')
                             ->required(),
-
-                        Select::make('gender')
-                            ->label('Gender')
-                            ->options(
-                                collect(EmployeeGender::cases())->mapWithKeys(fn($case) => [$case->value => $case->getLabel()])->toArray()
-                            )
+                        DatePicker::make('hire_date')
+                            ->label('Hire Date')
+                            ->minDate(now()->toDateString())
+                            ->native(false)
+                            // ->suffixIcon('bi-calendar-event')
                             ->required(),
                     ])
                     ->columns(2),
@@ -92,13 +70,6 @@ final class EmployeeResourceForm implements ResourceFieldContract
             Split::make([
                 Section::make('Employee Department Details')
                     ->schema([
-                        Select::make('employee_type')
-                            ->label('Employee Contract Type')
-                            ->options(
-                                collect(EmployeeTypeEnum::cases())->mapWithKeys(fn($case) => [$case->value => $case->getLabel()])->toArray()
-                            )
-                            ->required(),
-
                         Select::make('department_id')
                             ->label('Department Name')
                             ->live()
@@ -109,7 +80,6 @@ final class EmployeeResourceForm implements ResourceFieldContract
                                 $set('position_id', null);
                             })
                             ->required(),
-
                         Select::make('position_id')
                             ->label('Position Title')
                             ->required()
@@ -120,49 +90,29 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             ->searchable()
                             ->live()
                             ->preload(),
-
-
-
-                        Select::make('reporting_to')
-                            ->label('Reporting To')
-                            ->options(fn() => Employee::with('user')->get()->pluck('user.name', 'id'))
-                            ->searchable()
-                            ->hidden(fn($get) => ! $get('enable_reporting_to'))
-                            ->preload(),
-
-                        DatePicker::make('hire_date')
-                            ->label('Hire Date')
-                            ->minDate(now()->toDateString())
-                            ->native(false)
-                            // ->suffixIcon('bi-calendar-event')
-                            ->required(),
-
                         TextInput::make('discord_id')
                             ->label('Discord ID'),
-                            // ->suffixIcon('bi-discord'),
-                            
-                            TextInput::make('slack_id')
+                        // ->suffixIcon('bi-discord'),
+                        TextInput::make('slack_id')
                             ->label('Slack ID'),
-                            // ->suffixIcon('bi-slack'),
+                        // ->suffixIcon('bi-slack'),
                     ])
                     ->columns(2),
             ])->from('md'),
 
             // Toggle fields section (at the bottom of the form)
-            Section::make('Additional Settings')
+            Section::make('Reporting TO')
                 ->schema([
-                    Toggle::make('is_active')
-                        ->label('Active')
-                        ->default(true),
-
-                    Toggle::make('receive_mail')
-                        ->label('Receive Mail')
-                        ->default(true),
-
                     // Reporting To toggle and select fields
                     Toggle::make('enable_reporting_to')
                         ->label('Enable Reporting To')
                         ->reactive(),  // This makes the checkbox toggle the select field
+                    Select::make('reporting_to')
+                        ->label('')
+                        ->options(fn() => Employee::with('user')->get()->pluck('user.name', 'id'))
+                        ->searchable()
+                        ->hidden(fn($get) => ! $get('enable_reporting_to'))
+                        ->preload(),
                 ])
                 ->columns(4),  // Make this section span the full width (single column)
         ];
