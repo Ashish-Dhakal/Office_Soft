@@ -20,10 +20,8 @@ return new class extends Migration
             $table->string('subject');
             $table->foreignIdFor(Project::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(Client::class)->constrained()->onDelete('cascade');
-            // $table->foreignIdFor(ContractType::class)->constrained()->onDelete('set null');
-            // $table->foreignId('contract_type_id')->nullable()->constrained('contract_type', 'id')->onDelete('set null');
+            $table->foreignIdFor(ContractType::class)->nullable()->constrained()->onDelete('set null');  // Added nullable() here
 
-            // $table->foreignId('contract_type_id')->constrained('contract_types')->onDelete('set null');
             $table->text('description')->nullable();
             $table->text('notes')->nullable();
             $table->enum('payment_terms', ['monthly', 'milestone', 'lump_sum'])->default('milestone');

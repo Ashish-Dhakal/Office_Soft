@@ -33,7 +33,7 @@ class Contract extends Model
 
     public function contractType()
     {
-        return $this->belongsTo(ContractType::class);
+        return $this->belongsTo(ContractType::class , 'contract_type_id');
     }
 
     public function payments()
