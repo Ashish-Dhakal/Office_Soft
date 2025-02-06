@@ -11,7 +11,11 @@ class Project extends Model
         'description',
         'started_at',
         'deadline_at',
-        'completion_time',
+        'completed_at',
+        'status',
+        'budget',
+        'actual_cost',
+        'client_id',
     ];
 
     public function tasks()
@@ -22,5 +26,15 @@ class Project extends Model
     public function members()
     {
         return $this->hasMany(ProjectMember::class);
+    }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
+    }
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
     }
 }
