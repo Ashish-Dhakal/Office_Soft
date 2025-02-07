@@ -7,15 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $fillable = [
+        'client_id',
         'title',
-        'description',
-        'started_at',
-        'deadline_at',
-        'completed_at',
+        'project_summary',
+        'start_date',
+        'deadline_date',
+        'completed_date',
+        'cancelled_date',
+        'due_date',
         'status',
         'budget',
-        'actual_cost',
-        'client_id',
+        'notes',
+        'file',
+        'project_notification',
+        'is_active',
+        'task_board',
+        'gannt_chart'
     ];
 
     public function tasks()

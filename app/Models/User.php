@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\HasAvatar;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements HasAvatar
@@ -89,4 +90,9 @@ class User extends Authenticatable implements HasAvatar
     {
         return $this->hasOne(Employee::class);
     }
+
+    // public function contracts(): HasManyThrough
+    // {
+    //     return $this->hasManyThrough(Contract::class, Client::class);
+    // }
 }
