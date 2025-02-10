@@ -21,6 +21,11 @@ class ContractResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::$model::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -33,21 +38,18 @@ class ContractResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('contract_number')
                     ->label('Contract Number')
-                    ->prefix('Soft-')
-                    ->suffix('')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subject')
+                ->limit(30)
                     ->searchable(),
-                Tables\Columns\TextColumn::make('project_id')
+                Tables\Columns\TextColumn::make('project.title')
                     ->label('Project Name')
-                    ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('client_id')
-                    ->numeric()
+                Tables\Columns\TextColumn::make('client.user.name')
                     ->sortable(),
-                Tables\Columns\TextColumn::make('contract_type_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('contract_type.name')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('payment_terms'),
                 Tables\Columns\TextColumn::make('total_value')
                     ->numeric()
@@ -57,7 +59,8 @@ class ContractResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('contract_end_date')
                     ->date()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -72,8 +75,12 @@ class ContractResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ViewAction::make()
+                ->label('')
+                ->tooltip('View'),
+                Tables\Actions\EditAction::make()
+                ->label(__('action.edit.label'))
+                ->tooltip(__('action.edit.tooltip')),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

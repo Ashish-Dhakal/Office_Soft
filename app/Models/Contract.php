@@ -20,6 +20,12 @@ class Contract extends Model
         'contract_end_date',
         'status',
     ];
+    public static function generateContractNumber()
+    {
+        $latestContract = self::latest('id')->first();
+        $nextNumber = $latestContract ? intval(substr($latestContract->contract_number, -5)) + 1 : 1;
+        return 'soft-' . str_pad($nextNumber, 5, '0', STR_PAD_LEFT);
+    }
 
     public function project()
     {
