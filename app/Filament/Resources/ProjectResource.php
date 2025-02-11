@@ -14,6 +14,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -22,7 +24,7 @@ class ProjectResource extends Resource
 {
     protected static ?string $model = Project::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Work';
 
     public static function getNavigationBadge(): ?string
     {
@@ -33,14 +35,18 @@ class ProjectResource extends Resource
     {
         return $form
             ->schema([
+                TextInput::make('project_code')
+                    ->label('Project Code')
+                    ->readOnly()
+                    ->default(fn() => Project::generateProjectNumber()),
                 TextInput::make('title')
                     ->required()
                     ->maxLength(20),
-                RichEditor::make('description')
+                RichEditor::make('project_summary')
                     ->columnSpanFull(),
-                DatePicker::make('started_at')
+                DatePicker::make('start_date')
                     ->native(false),
-                DatePicker::make('deadline_at')
+                DatePicker::make('deadline_date')
                     ->native(false),
                 Select::make('status')
                     ->options([
@@ -52,6 +58,8 @@ class ProjectResource extends Resource
                     ])
                     ->required(),
                 TextInput::make('budget')
+                    // ->suffixIcon('bi-currency-dollar')
+                    ->placeholder('Rs. 0.00')
                     ->numeric(),
                 TextInput::make('actual_cost')
                     ->numeric(),
@@ -78,33 +86,53 @@ class ProjectResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('title')
+                TextColumn::make('project_code')
+                    ->label('P.Code')
+                    ->sortable()
+                    ->searchable(),
+                TextColumn::make('title')
                     ->searchable()
                     ->limit(30),
-                Tables\Columns\TextColumn::make('started_at')
+                TextColumn::make('start_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('deadline_at')
+                TextColumn::make('deadline_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('completed_at')
-                    ->dateTime()
+                TextColumn::make('deadline_date')
+                    ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('status'),
-                Tables\Columns\TextColumn::make('budget')
+                TextColumn::make('status'),
+                TextColumn::make('budget')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('actual_cost')
+                TextColumn::make('budget')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('client_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('created_at')
+                TextColumn::make('client.user.name')
+                    ->label('Client Name')
+                    ->searchable(),
+                IconColumn::make('project_notification')
+                    ->label('Notification')
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                IconColumn::make('is_active')
+                    ->label('Active')
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                IconColumn::make('task_board')
+                    ->label('Task Board')
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                IconColumn::make('gannt_chart')
+                    ->label('Gannt Chart')
+                    ->boolean()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
+                TextColumn::make('updated_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

@@ -14,6 +14,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->string('project_code')->unique();
             $table->string('title');
             $table->foreignIdFor(Client::class)->nullable()->constrained()->onDelete('set null');
             $table->longText('project_summary')->nullable();
@@ -24,7 +25,6 @@ return new class extends Migration
             $table->date('due_date')->nullable();
             $table->enum('status', ['planned', 'in_progress', 'completed', 'on_hold', 'cancelled'])->default('planned');
             $table->decimal('budget', 10, 2)->nullable();
-            $table->foreignId('client_id')->nullable()->constrained()->onDelete('set null');
             $table->longText('notes')->nullable();
             $table->boolean('gannt_chart')->default(true);
             $table->boolean('task_board')->default(true);

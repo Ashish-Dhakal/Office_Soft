@@ -7,12 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     protected $fillable = [
+        'project_code',
         'client_id',
         'title',
         'project_summary',
         'start_date',
         'deadline_date',
-        'completed_date',
+        'deadline_date',
         'cancelled_date',
         'due_date',
         'status',
@@ -24,6 +25,13 @@ class Project extends Model
         'task_board',
         'gannt_chart'
     ];
+
+    public static function generateProjectNumber()
+    {
+        $latestProject = self::latest('id')->first();
+        $nextNumber = $latestProject ? intval(substr($latestProject->project_code, -3)) + 1 : 1;
+        return 'soft-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+    }
 
     public function tasks()
     {

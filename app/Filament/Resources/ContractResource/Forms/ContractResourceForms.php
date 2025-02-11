@@ -29,9 +29,10 @@ final class ContractResourceForms implements ResourceFieldContract
      public static function getFields(): array
      {
           return [
-               TextInput::make('contract_number')
+               TextInput::make('contract_code')
                     ->readOnly()
                     ->default(fn() => Contract::generateContractNumber()),
+
                TextInput::make('subject')
                     ->required()
                     ->maxLength(255),
@@ -40,20 +41,34 @@ final class ContractResourceForms implements ResourceFieldContract
                     ->label('Project Name')
                     ->options(Project::all()->pluck('title', 'id')->toArray())
                     ->searchable()
-                    ->required(),
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(fn(Set $set, $state) => self::fillProjectDetails($set, $state)),
+
                Select::make('client_id')
                     ->label('Client Name')
                     ->options(Client::all()->pluck('user.name', 'id')->toArray())
                     ->searchable()
                     ->required(),
 
+               DatePicker::make('contract_start_date')
+                    // ->native(false)
+                    ->required(),
+
+               DatePicker::make('contract_end_date')
+                    // ->native(false)
+                    ->after('contract_start_date'),
+
+               TextInput::make('total_value')
+                    ->numeric(),
+
                Select::make('contract_type_id')
                     ->label('Contract Type Name')
                     ->options(ContractType::all()->pluck('name', 'id')->toArray()),
-               RichEditor::make('description')
-                    ->columnSpanFull(),
-               RichEditor::make('notes')
-                    ->columnSpanFull(),
+
+               RichEditor::make('description')->columnSpanFull(),
+               RichEditor::make('notes')->columnSpanFull(),
+
                Select::make('payment_terms')
                     ->label('Payment Terms')
                     ->options([
@@ -62,14 +77,7 @@ final class ContractResourceForms implements ResourceFieldContract
                          'lump_sum' => 'Lump Sum',
                     ])
                     ->required(),
-               TextInput::make('total_value')
-                    ->numeric(),
-               DatePicker::make('contract_start_date')
-                    ->native(false)
-                    ->required(),
-               DatePicker::make('contract_end_date')
-                    ->native(false)
-                    ->after('contract_start_date'),
+
                Select::make('status')
                     ->label('Contract Status')
                     ->options([
@@ -81,5 +89,19 @@ final class ContractResourceForms implements ResourceFieldContract
                     ])
                     ->required(),
           ];
+     }
+
+     private static function fillProjectDetails(Set $set, $projectId)
+     {
+          if ($projectId) {
+               $project = Project::find($projectId);
+               if ($project) {
+                    // dd($project->start_date);
+                    $set('client_id', $project->client_id);
+                    $set('contract_start_date', $project->start_date);
+                    $set('contract_end_date', $project->deadline_date);
+                    $set('total_value', $project->budget);
+               }
+          }
      }
 }

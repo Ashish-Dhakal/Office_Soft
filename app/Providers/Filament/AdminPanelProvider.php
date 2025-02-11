@@ -18,6 +18,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\NavigationGroup;
 // use Filament\Panels\Concerns\PanelsRenderHook;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -44,10 +45,15 @@ class AdminPanelProvider extends PanelProvider
                 'secondary' => '#106681',
                 'ternary' => Color::Pink,
             ])
+            ->brandLogo(asset('assets/icon/office_soft_icon.png'))
+            ->favicon(asset('assets/icon/office_soft_fav-icon.png'))
+            ->brandLogoHeight('4rem')
+            ->font('poppins')
+            ->brandName('Office Soft')
+            ->spa()
             ->unsavedChangesAlerts()
             ->font('poppins')
             ->darkMode(false)
-           
             ->sidebarWidth('15rem')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
