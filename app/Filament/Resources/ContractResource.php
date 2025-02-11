@@ -19,7 +19,7 @@ class ContractResource extends Resource
 {
     protected static ?string $model = Contract::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Work';
 
     public static function getNavigationBadge(): ?string
     {
@@ -36,8 +36,8 @@ class ContractResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('contract_number')
-                    ->label('Contract Number')
+                Tables\Columns\TextColumn::make('contract_code')
+                    ->label('C.Code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('subject')
                 ->limit(30)
@@ -51,7 +51,7 @@ class ContractResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('payment_terms'),
-                Tables\Columns\TextColumn::make('total_value')
+                Tables\Columns\TextColumn::make('budget')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('contract_start_date')

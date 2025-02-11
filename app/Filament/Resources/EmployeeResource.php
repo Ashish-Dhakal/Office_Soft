@@ -20,8 +20,8 @@ use App\Models\Position;
 class EmployeeResource extends Resource
 {
     protected static ?string $model = Employee::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-user-group';
+    
+    protected static ?string $navigationGroup = 'Human Resource';
 
     public static function getNavigationBadge(): ?string
     {

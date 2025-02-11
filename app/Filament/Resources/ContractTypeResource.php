@@ -18,7 +18,7 @@ class ContractTypeResource extends Resource
 {
     protected static ?string $model = ContractType::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationGroup = 'Work';
 
     public static function form(Form $form): Form
     {
