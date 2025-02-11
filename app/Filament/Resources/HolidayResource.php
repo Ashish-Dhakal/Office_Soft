@@ -2,10 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ContractTypeResource\Forms\ContractTypeResourceForm;
-use App\Filament\Resources\ContractTypeResource\Pages;
-use App\Filament\Resources\ContractTypeResource\RelationManagers;
-use App\Models\ContractType;
+use App\Filament\Resources\HolidayResource\Pages;
+use App\Filament\Resources\HolidayResource\RelationManagers;
+use App\Models\Holiday;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -14,11 +13,11 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class ContractTypeResource extends Resource
+class HolidayResource extends Resource
 {
-    protected static ?string $model = ContractType::class;
+    protected static ?string $model = Holiday::class;
 
-    protected static ?string $navigationGroup = 'Work';
+    protected static ?string $navigationGroup = 'Human Resource';
 
     public static function getNavigationBadge(): ?string
     {
@@ -27,20 +26,36 @@ class ContractTypeResource extends Resource
 
     public static function getNavigationBadgeTooltip(): ?string
     {
-        return 'Total Contract Types';
+        return 'Total Holidays';
     }
-
     public static function form(Form $form): Form
     {
         return $form
-            ->schema(ContractTypeResourceForm::getFields());
+            ->schema([
+                Forms\Components\DatePicker::make('date')
+                    ->required()
+                    ->native(false),
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->maxLength(100),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull()
+                    ->required()
+                    ->maxLength(255),
+            ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')
+                Tables\Columns\TextColumn::make('date')
+                    ->date(),
+                Tables\Columns\TextColumn::make('title')
+                    ->limit(30)
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('description')
+                    ->limit(30)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -75,10 +90,10 @@ class ContractTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListContractTypes::route('/'),
-            'create' => Pages\CreateContractType::route('/create'),
-            'view' => Pages\ViewContractType::route('/{record}'),
-            'edit' => Pages\EditContractType::route('/{record}/edit'),
+            'index' => Pages\ListHolidays::route('/'),
+            // 'create' => Pages\CreateHoliday::route('/create'),
+            // 'view' => Pages\ViewHoliday::route('/{record}'),
+            // 'edit' => Pages\EditHoliday::route('/{record}/edit'),
         ];
     }
 }

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->date('date')->nullable();
             $table->string('title');
             $table->longText('description')->nullable();
-            // $table->enum('applicable_for', EmployeeTypeEnum::values())->default(EmployeeTypeEnum::FULL_TIME->value);
             $table->timestamps();
         });
     }

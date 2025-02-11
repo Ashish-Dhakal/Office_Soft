@@ -26,6 +26,11 @@ class ContractResource extends Resource
         return (string) static::$model::count();
     }
 
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Total Contracts';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
