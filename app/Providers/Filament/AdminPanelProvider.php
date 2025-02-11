@@ -19,6 +19,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
 // use Filament\Panels\Concerns\PanelsRenderHook;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
@@ -55,12 +56,19 @@ class AdminPanelProvider extends PanelProvider
             ->font('poppins')
             ->darkMode(false)
             ->sidebarWidth('15rem')
+            // ->navigationItems([
+            //     NavigationItem::make('Company Profile')
+            //     // ->url('https://www.office-soft.com')
+            //     ->group('External')
+            //     ->sort(4),
+            // ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->widgets([
             //    Widgets\AccountWidget::class,
             //     Widgets\FilamentInfoWidget::class,
