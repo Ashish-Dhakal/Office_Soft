@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    protected $fillable = ['client_id','title', 'description', 'status' , 'priority', 'image', 'attachment'];
+    protected $fillable = ['creator_id', 'creator_role', 'project_id', 'ticket_title', 'description', 'status', 'priority', 'image', 'attachment'];
 
-    public function client()
+
+    public function creator()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo(User::class, 'creator_id');
     }
 
     public function category()
@@ -23,5 +24,8 @@ class Ticket extends Model
         return $this->hasMany(TicketAssignment::class);
     }
 
-    
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }
