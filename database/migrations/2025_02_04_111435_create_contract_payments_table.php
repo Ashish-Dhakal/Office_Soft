@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('contract_id')->constrained()->onDelete('cascade');
             $table->decimal('amount', 10, 2);
             $table->date('payment_date');
-            $table->enum('status', ['pending', 'completed', 'failed'])->default('pending');
+            $table->enum('status', ['pending', 'failed' ,'half_paid' , 'paid' ,'one_third_paid'])->default('pending');
             $table->timestamps();
         });
     }

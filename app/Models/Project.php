@@ -30,7 +30,7 @@ class Project extends Model
     {
         $latestProject = self::latest('id')->first();
         $nextNumber = $latestProject ? intval(substr($latestProject->project_code, -3)) + 1 : 1;
-        return 'soft-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+        return 'soft-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT).'-proj';
     }
 
     public function tasks()

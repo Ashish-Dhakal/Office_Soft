@@ -19,7 +19,7 @@ return new class extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->foreignId('creator_id')->constrained('users')->onDelete('cascade');
-            $table->foreignIdFor(Project::class)->constrained()->onDelete('set null');
+            $table->foreignIdFor(Project::class)->nullable()->constrained()->onDelete('set null');
             $table->string('creator_role');
             $table->string('ticket_title');
             $table->longText('description');

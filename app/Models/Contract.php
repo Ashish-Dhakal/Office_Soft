@@ -24,7 +24,7 @@ class Contract extends Model
     {
         $latestContract = self::latest('id')->first();
         $nextNumber = $latestContract ? intval(substr($latestContract->contract_code, -3)) + 1 : 1;
-        return 'soft-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT);
+        return 'soft-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT) . '-cont';
     }
 
     public function project()

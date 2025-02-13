@@ -53,7 +53,7 @@ class User extends Authenticatable implements HasAvatar
     
     public function hasRole(string $role): bool
     {
-        return $this->role === $role;
+        return $this->role->value === $role;
     }
 
     
