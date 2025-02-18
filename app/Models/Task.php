@@ -8,15 +8,16 @@ class Task extends Model
 {
     protected $fillable = [
         'title',
-        'employee_id',
         'project_id',
         'description',
-        'given_date',
-        'completed_at',
-        'started_at',
+        'assigned_date',
+        'completed_date',
+        'started_date',
         'task_status',
         'comment',
         'due_date',
+        'attachment',
+        'task_priority', 
     ];
 
     public function project()

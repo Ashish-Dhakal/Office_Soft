@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\ProjectStatusEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -31,6 +32,12 @@ class Project extends Model
         $latestProject = self::latest('id')->first();
         $nextNumber = $latestProject ? intval(substr($latestProject->project_code, -3)) + 1 : 1;
         return 'soft-' . str_pad($nextNumber, 3, '0', STR_PAD_LEFT).'-proj';
+    }
+
+    public function casts():array{
+        return [
+            'status' => ProjectStatusEnum::class,
+        ];
     }
 
     public function tasks()

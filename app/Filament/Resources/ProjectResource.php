@@ -2,8 +2,12 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\ProjectStatusEnum;
+use App\Filament\Actions\ColumnAction;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Filament\Tables\Columns\StatusActionColumn;
+use App\Livewire\ProjectStatusUpdateModal;
 use App\Models\Client;
 use App\Models\Project;
 use Filament\Forms;
@@ -16,7 +20,9 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
+use Illuminate\Container\Attributes\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -102,7 +108,36 @@ class ProjectResource extends Resource
                 TextColumn::make('deadline_date')
                     ->date()
                     ->sortable(),
-                TextColumn::make('status'),
+                // TextColumn::make('status'),
+
+                // StatusActionColumn::make('status')
+                // ->actions(function ($record) {
+                //     return [
+                //         ColumnAction::make('edit_status')
+                //             ->color($record->status->getColor())
+                //             ->arguments([
+                //                 'projectId' => $record->id,
+                //                 'currentStatus' => $record->status,
+                //             ])
+                //             ->tooltip('Change Status')
+                //             ->icon('heroicon-o-pencil')
+                //             ->size('xs')
+                //             ->eventName('openProjectStatusModal') // Make sure this matches
+                //             // ->component(ProjectStatusUpdateModal::class),
+                //     ];
+                // }),
+
+
+                ViewColumn::make('status')
+                ->label('Status')
+                ->view('tables.columns.hello'),
+            
+            
+            
+
+
+
+
                 TextColumn::make('budget')
                     ->numeric()
                     ->sortable(),
