@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\TaskPriority;
+use App\Enums\TaskPriorityEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
@@ -19,6 +21,15 @@ class Task extends Model
         'attachment',
         'task_priority', 
     ];
+
+    //cast
+ 
+    protected function casts(): array
+    {
+        return [
+          'task_priority' => TaskPriority::class,
+        ];
+    }
 
     public function project()
     {
