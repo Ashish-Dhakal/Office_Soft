@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\UserRoles;
+use App\Models\Department;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -14,14 +15,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
 
-        User::factory()->create([
+        $this->call([
+            DepartmentSeeder::class,
+            PositionSeeder::class,
+            RoleSeeder::class,
+            ShieldSeeder::class,
+        ]);
+
+        // Create admin user
+        $user = User::factory()->create([
             'name' => 'Admin User',
             'email' => 'office@soft.com',
-            'role'=> UserRoles::ADMIN,
         ]);
-        $this->call(DepartmentSeeder::class);
-        $this->call(PositionSeeder::class);
+        $user->syncRoles([UserRoles::SUPER_ADMIN]);
     }
 }
