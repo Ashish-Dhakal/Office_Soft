@@ -5,17 +5,22 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Enums\UserRoles;
+use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements HasAvatar
+
+class User extends Authenticatable implements HasAvatar, FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+    use HasRoles, HasPanelShield;
 
     /**
      * The attributes that are mass assignable.
@@ -27,7 +32,6 @@ class User extends Authenticatable implements HasAvatar
         'name',
         'email',
         'password',
-        'role',
         'avatar',
         'address_1',
         'address_2',
@@ -51,10 +55,10 @@ class User extends Authenticatable implements HasAvatar
 
 
     
-    public function hasRole(string $role): bool
-    {
-        return $this->role->value === $role;
-    }
+    // public function hasRole(string $role): bool
+    // {
+    //     return $this->role->value === $role;
+    // }
 
     
 
@@ -77,7 +81,6 @@ class User extends Authenticatable implements HasAvatar
     {
         return [
             'password' => 'hashed',
-            'role' => UserRoles::class,
         ];
     }
 

@@ -78,8 +78,8 @@ class TicketResource extends Resource
                 Tables\Columns\TextColumn::make('project.title')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('creator_role')
-                    ->searchable(),
+                // Tables\Columns\TextColumn::make('creator_role')
+                //     ->searchable(),
                 Tables\Columns\TextColumn::make('ticket_title')
                     ->limit(30)
                     ->searchable(),

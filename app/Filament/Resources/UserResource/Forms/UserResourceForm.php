@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\UserResource\Forms;
 
 use App\Filament\Contracts\ResourceFieldContract;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Section;
@@ -55,15 +56,22 @@ final class UserResourceForm implements ResourceFieldContract
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
 
-                        Select::make('role')
-                            ->options([
-                                'client' => 'Client',
-                                'employee' => 'Employee',
-                                'admin' => 'Admin',
-                            ])
-                            ->required()
-                            ->label('Role')
-                            ->placeholder('Select a role'),
+                        // Select::make('role')
+                        //     ->options([
+                        //         'client' => 'Client',
+                        //         'employee' => 'Employee',
+                        //         'admin' => 'Admin',
+                        //     ])
+                        //     ->required()
+                        //     ->label('Role')
+                        //     ->placeholder('Select a role'),
+                        Select::make('roles')
+                            ->relationship('roles', 'name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable(),
+
+                       
 
                         TextInput::make('password')
                             ->password()

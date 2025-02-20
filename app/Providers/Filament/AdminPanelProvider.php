@@ -36,6 +36,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('office_soft')
             ->login()
             ->profile()
+            ->registration()
             ->colors([
                 'danger' => Color::Red,
                 'gray' => Color::Zinc,
@@ -86,6 +87,9 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                \BezhanSalleh\FilamentShield\FilamentShieldPlugin::make(),
             ]);
     }
 }

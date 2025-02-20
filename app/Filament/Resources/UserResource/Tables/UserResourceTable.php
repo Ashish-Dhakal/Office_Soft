@@ -61,7 +61,7 @@ final class UserResourceTable implements ResourceFieldContract
             TextColumn::make('email')
                 ->searchable(),
 
-            TextColumn::make('role')
+            TextColumn::make('role.name')
                 ->searchable()
                 ->badge(),
 

@@ -29,10 +29,10 @@ final class ClientResourceForm implements ResourceFieldContract
                         ->label('Client Name')
                         ->createOptionForm(UserResourceForm::getFields())
                         ->editOptionForm(UserResourceForm::getFields())
-                        ->relationship('user', 'name', function ($query) {
-                            $query->where('role', 'client')
-                                ->whereDoesntHave('client');
-                        })
+                        // ->relationship('user', 'name', function ($query) {
+                        //     $query->where('role', 'client')
+                        //         ->whereDoesntHave('client');
+                        // })
                         ->searchable()
                         ->preload()
                         ->required()

@@ -39,10 +39,10 @@ final class EmployeeResourceForm implements ResourceFieldContract
                             ->label('Employee Name')
                             ->createOptionForm(UserResourceForm::getFields())
                             ->editOptionForm(UserResourceForm::getFields())
-                            ->relationship('user', 'name', function ($query) {
-                                $query->where('role', 'employee')
-                                    ->whereDoesntHave('employee');
-                            })
+                            // ->relationship('user', 'name', function ($query) {
+                            //     $query->where('role', 'employee')
+                            //         ->whereDoesntHave('employee');
+                            // })
                             ->required()
                             ->hidden(fn(Get $get) => $get('id')),
                         Select::make('employee_type')
